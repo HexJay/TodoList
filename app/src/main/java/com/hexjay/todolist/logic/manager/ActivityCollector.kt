@@ -1,10 +1,11 @@
 package com.hexjay.todolist.logic.manager
 
 import android.app.Activity
+import kotlin.system.exitProcess
 
 object ActivityCollector {
-    private val activities = ArrayList<Activity>()
 
+    private val activities = ArrayList<Activity>()
     fun addActivity(activity: Activity){
         activities.add(activity)
     }
@@ -20,5 +21,8 @@ object ActivityCollector {
             }
         }
         activities.clear()
+        //结束进程
+//        android.os.Process.killProcess(android.os.Process.myPid())
+//        exitProcess(0)
     }
 }

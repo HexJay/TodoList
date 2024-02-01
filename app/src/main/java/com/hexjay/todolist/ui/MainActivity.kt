@@ -1,27 +1,58 @@
 package com.hexjay.todolist.ui
 
+import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.Message
-import android.util.Log
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.hexjay.todolist.R
 import com.hexjay.todolist.databinding.ActivityMainBinding
-import com.hexjay.todolist.utils.HeLog
-import com.hexjay.todolist.utils.isDarkTheme
-import kotlin.concurrent.thread
+
 
 class MainActivity : BaseActivity() {
+
+    private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        HeLog.d(isDarkTheme())
+        //bind Navigation to BottomNavigationView
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
+        binding.navMain.setupWithNavController(navController)
+
+        //clear icon toast
+        clearBottomNavigationToast(binding.navMain)
+
+        //set statusBar
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.decorView.windowInsetsController?.setSystemBarsAppearance(
+                APPEARANCE_LIGHT_STATUS_BARS,
+                APPEARANCE_LIGHT_STATUS_BARS
+            )
+        }
+        //ban darkMode
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
-    val handler = object: Handler(Looper.getMainLooper()){
-        override fun handleMessage(msg: Message) {
-            super.handleMessage(msg)
-            when(msg.what){
-            }
+
+    private fun clearBottomNavigationToast(nav: BottomNavigationView) {
+        val ids = ArrayList<Int>().apply {
+            add(R.id.nav_todolist)
+            add(R.id.nav_calendar)
+            add(R.id.nav_timing)
+            add(R.id.nav_chart)
+            add(R.id.nav_discover)
+        }
+        val bottomNavigationMenuView = nav.getChildAt(0) as ViewGroup
+        for (pos in 0 until ids.size) {
+            bottomNavigationMenuView.getChildAt(pos).findViewById<View>(ids[pos])
+                .setOnLongClickListener { true }
         }
     }
 }

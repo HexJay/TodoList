@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/nav_todolist">
+
+    <!--    id要和menu中的id对应-->
+    <fragment
+        android:id="@+id/nav_todolist"
+        android:name="com.hexjay.todolist.ui.TodoListFragment"
+        android:label="fragment_todolist"
+        tools:layout="@layout/fragment_todolist" />
+    <fragment
+        android:id="@+id/nav_calendar"
+        android:name="com.hexjay.todolist.ui.CalendarFragment"
+        android:label="fragment_overview"
+        tools:layout="@layout/fragment_calendar" />
+    <fragment
+        android:id="@+id/nav_timing"
+        android:name="com.hexjay.todolist.ui.TimingFragment"
+        android:label="fragment_clock"
+        tools:layout="@layout/fragment_timing" />
+    <fragment
+        android:id="@+id/nav_chart"
+        android:name="com.hexjay.todolist.ui.ChartFragment"
+        android:label="fragment_chart"
+        tools:layout="@layout/fragment_chart" />
+    <fragment
+        android:id="@+id/nav_discover"
+        android:name="com.hexjay.todolist.ui.DiscoverFragment"
+        android:label="fragment_discover"
+        tools:layout="@layout/fragment_discover" />
+
+
+</navigation>
